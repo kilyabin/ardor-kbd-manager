@@ -1,0 +1,4 @@
+# ARDOR GAMING Immortality (K210ZETRGB), USB 0416:b23c
+# Grants the active desktop user (uaccess) and members of the input group
+# access to the keyboard's hidraw nodes.
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0416", ATTRS{idProduct}=="b23c", MODE="0660", GROUP="input", TAG+="uaccess"

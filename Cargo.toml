@@ -1,0 +1,24 @@
+[package]
+name = "ardor-kbd-manager"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "Linux CLI and TUI for ARDOR GAMING / Winbond ZETRGB keyboard backlight control"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/kilyabin/ardor-kbd-manager"
+keywords = ["keyboard", "rgb", "backlight", "hidraw", "linux"]
+categories = ["command-line-utilities", "hardware-support"]
+
+[[bin]]
+name = "ardor-led"
+path = "src/main.rs"
+
+[dependencies]
+crossterm = "0.29"
+libc = "0.2"
+ratatui = "0.30"
+
+[profile.release]
+strip = true
+lto = "thin"
