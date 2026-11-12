@@ -7,6 +7,7 @@ The project provides a small CLI (`ardor-led`) and a terminal UI (`ardor-led tui
 static colors, built-in effects, per-key colors, brightness, speed, direction and
 firmware version reporting over the keyboard's vendor HID interface.
 
+> [!WARNING]
 > Unofficial project. Not affiliated with ARDOR GAMING. Use at your own risk.
 
 ## Supported hardware
@@ -36,7 +37,7 @@ layouts (60%, 68-key, 104-key, etc.) are not implemented yet.
 `music` is the vendor "Musical Rhythm" mode. The vendor application captures
 audio on the host, runs an FFT and streams per-LED data to the keyboard. This
 project only sends the mode selector, so `music` will not react to sound unless
-host-side audio streaming is added.
+host-side audio streaming is added. (planned to add)
 
 ## Requirements
 
