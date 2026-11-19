@@ -47,31 +47,48 @@ host-side audio streaming is added. (planned to add)
 
 ## Build and install
 
+### Install a prebuilt binary
+
+Download the `ardor-led` Linux x86_64 binary from the
+[latest GitHub Release](https://github.com/kilyabin/ardor-kbd-manager/releases/latest),
+then install it:
+
+```bash
+sudo install -Dm755 ardor-led /usr/local/bin/ardor-led
+```
+
+Releases are published from `main` and are identified by a UTC date and workflow
+run number, for example `v2026.11.20-42`.
+
+### Build from source
+
 ```bash
 git clone https://github.com/kilyabin/ardor-kbd-manager.git
 cd ardor-kbd-manager
 
 cargo build --release
 sudo install -Dm755 target/release/ardor-led /usr/local/bin/ardor-led
+```
 
+### Configure keyboard access
+
+Install the udev rule and reload the rules:
+
+```bash
 sudo install -Dm644 udev/99-ardor-gaming-keyboard.rules \
   /etc/udev/rules.d/99-ardor-gaming-keyboard.rules
 sudo udevadm control --reload-rules
 sudo udevadm trigger
+```
 
-# Fallback for sessions without systemd-logind uaccess:
+For sessions without systemd-logind `uaccess`, add your user to the `input`
+group, then log out and back in:
+
+```bash
 sudo usermod -aG input "$USER"
-# then log out and back in
 ```
 
 `cargo install --path .` also works if you only need the binary.
-
-## GitHub releases
-
-Each push to `main` and each manual workflow run publishes a GitHub Release with
-the Linux x86_64 binary attached. Release tags use the UTC date and workflow run
-number, for example `v2026.11.20-42`. Pull requests build the binary without
-publishing a release.
 
 Verify that the keyboard is detected:
 
