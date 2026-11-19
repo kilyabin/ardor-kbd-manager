@@ -66,6 +66,13 @@ sudo usermod -aG input "$USER"
 
 `cargo install --path .` also works if you only need the binary.
 
+## GitHub releases
+
+Each push to `main` and each manual workflow run publishes a GitHub Release with
+the Linux x86_64 binary attached. Release tags use the UTC date and workflow run
+number, for example `v2026.11.20-42`. Pull requests build the binary without
+publishing a release.
+
 Verify that the keyboard is detected:
 
 ```bash

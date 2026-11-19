@@ -2,16 +2,16 @@ name: Build
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 jobs:
   build-linux:
     name: Build Linux binary
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -26,4 +26,26 @@ jobs:
           name: ardor-led-linux-x86_64
           path: target/release/ardor-led
           if-no-files-found: error
+
+  publish-release:
+    name: Publish GitHub release
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: build-linux
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download Linux binary
+        uses: actions/download-artifact@v4
+        with:
+          name: ardor-led-linux-x86_64
+      - name: Create dated release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="v$(date -u +'%Y.%m.%d')-${GITHUB_RUN_NUMBER}"
+          gh release create "$tag" ardor-led \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "$tag" \
+            --generate-notes
 
